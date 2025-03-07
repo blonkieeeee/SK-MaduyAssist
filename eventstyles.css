@@ -1,0 +1,211 @@
+/* Reset & Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  /* NAVBAR */
+  .navbar {
+    background: linear-gradient(90deg, #000000, #ff8052); /* High-end gradient orange */
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    height: 110px;
+  }
+  
+  /* Container for brand (left) and nav (right) */
+  .navbar .container {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    max-width: 1200px;
+   
+    
+  }
+  
+  /* Brand: Logo + Title */
+  .brand {
+    display: flex;
+    align-items: center;
+  }
+  
+  .brand img {
+    height: 100px; /* Adjust logo size */
+    width: 100px;
+    margin-left: 100px; /* Move the brand in from the left if you want */
+    transition: transform 0.3s;
+  }
+  .brand img:hover {
+    transform: scale(1.05);
+  }
+  
+  .site-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 28px;
+    font-weight: bold;
+    color: #fff;
+    margin-top: 1px;
+    margin-left: 10px;
+  }
+  
+  /* Nav Links */
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    margin: 950px;
+    padding: 0;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+    font-size: 18px;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover {
+    color: #1f1f2e;
+  }
+  .navbar h1 {
+    color: #fff;
+    font-weight: 800;
+    font-size: 28px;
+}
+  
+  /* EVENTS SECTION */
+  .events-section {
+    background-color: #fff;
+    margin: 40px auto;
+    padding: 40px 20px;
+    max-width: 1200px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  }
+  
+  .events-section h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 32px;
+    color: #ff8052;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .intro {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 30px;
+  }
+  
+  /* FILTER FORM */
+  .event-filters {
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  .event-filters form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .filter-group label {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 5px;
+  }
+  
+  .filter-group input,
+  .filter-group select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+  }
+  
+  .btn-filter {
+    padding: 10px 20px;
+    background-color: #ff8052;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .btn-filter:hover {
+    background-color: #e66a3c;
+  }
+  
+  /* EVENT LIST */
+  .event-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .event-card {
+    background-color: #fdfdfd;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    transition: box-shadow 0.3s;
+  }
+  
+  .event-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  
+  .event-card h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .event-card .date,
+  .event-card .location {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 8px;
+  }
+  
+  .event-card .description {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 15px;
+  }
+  
+  .btn-register {
+    display: inline-block;
+    background-color: #ff8052;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+  }
+  .btn-register:hover {
+    background-color: #e66a3c;
+  }
+  

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Events - SK MaduyAssist</title>
+  <!-- Google Fonts: Poppins & Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <!-- External CSS -->
+  <link rel="stylesheet" href="eventstyles.css">
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container">
+      <!-- Brand: Logo & Site Title on the far left -->
+      <div class="brand">
+        <img src="/pictures/uuu.png" alt="SK MaduyAssist Logo">
+        
+      </div>
+      <h1 class="site-title">SK MaduyAssist</h1>
+      <!-- Navigation Links on the Right -->
+      <nav>
+        <ul class="nav-links">
+            <li><a href="userhome.html">Home</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="#">Logout</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Events Section -->
+  <section class="events-section">
+    <div class="container">
+      <h2>Upcoming Events</h2>
+      <p class="intro">Stay updated with the latest SK events and community programs!</p>
+
+      <!-- Filter Form -->
+      <div class="event-filters">
+        <form id="filter-form">
+          <div class="filter-group">
+            <label for="filter-date">Filter by Date:</label>
+            <input type="date" id="filter-date" name="filter-date">
+          </div>
+          <div class="filter-group">
+            <label for="filter-category">Category:</label>
+            <select id="filter-category" name="filter-category">
+              <option value="all">All</option>
+              <option value="community">Community</option>
+              <option value="education">Education</option>
+              <option value="volunteer">Volunteer</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-filter">Apply Filter</button>
+        </form>
+      </div>
+
+      <!-- Event Cards List -->
+      <div class="event-list">
+        <div class="event-card">
+          <h3>Community Clean-Up Drive</h3>
+          <p class="date">Date: April 20, 2025</p>
+          <p class="location">Location: Barangay Hall Grounds</p>
+          <p class="description">
+            Join us for a morning of community service and environmental awareness. Volunteers needed!
+          </p>
+          <a href="#" class="btn-register">Register</a>
+        </div>
+        <div class="event-card">
+          <h3>Youth Leadership Summit</h3>
+          <p class="date">Date: May 10, 2025</p>
+          <p class="location">Location: Community Sports Complex</p>
+          <p class="description">
+            A full-day summit focused on leadership skills, community engagement, and personal development for local youth.
+          </p>
+          <a href="#" class="btn-register">Register</a>
+        </div>
+        <!-- Additional event cards can be added here -->
+      </div>
+    </div>
+  </section>
+</body>
+</html>

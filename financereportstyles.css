@@ -1,0 +1,131 @@
+/* Global Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7fc;
+    color: #333;
+  }
+  
+  /* Navbar */
+  .navbar {
+    background: linear-gradient(90deg, #000000, #ff8052); /* High-end gradient orange */
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    height: 75px;
+  }
+  
+  .navbar .container {
+    display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;    /* Use full width */
+  margin: 0;      /* Remove default auto margins if any */
+  padding: 0 20px;
+    
+  }
+  
+  /* Brand Section (Logo + Title) */
+  
+  .brand img {
+    height: 100px; /* Adjust logo size as needed */
+    width: 100px;
+    margin-left:100px;
+    transition: transform 0.3s;
+  }
+  .brand img:hover {
+    transform: scale(1.05);
+  }
+  .site-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 28px;
+    font-weight: bold;
+    color: #fff;
+    margin-left: 20px;
+  }
+  
+  /* Nav Links */
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    margin-left: 800px;
+}
+
+  .nav-links li a {
+    text-decoration: none;
+    color: #f7f7f7;
+    font-weight: 600;
+    transition: color 0.3s;
+    font-size: 18px;
+  }
+  .nav-links li a:hover {
+    color: #000000;
+  }
+  
+/* Financial Reports Module Styles */
+.financial-reports {
+    background-color: #fff;
+    padding: 40px 20px;
+    margin: 40px auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+.financial-reports h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 32px;
+    color: #ff8052;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.financial-reports p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.reports-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.report-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    transition: box-shadow 0.3s;
+}
+.report-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.report-card h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+}
+.report-card .upload-date {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 10px;
+}
+.report-card .description {
+    font-size: 16px;
+    margin-bottom: 15px;
+    color: #555;
+}
+.download-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff8052;
+    color: #fff;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+.download-btn:hover {
+    background-color: #e66a3c;
+}

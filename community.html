@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Community Feed - SK MaduyAssist</title>
+  <!-- Google Fonts: Poppins & Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <!-- External CSS -->
+  <link rel="stylesheet" href="communitystyles.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="container">
+      <!-- Brand: Logo + Stacked Text -->
+      <div class="brand">
+        <img src="/pictures/uuu.png" alt="SK MaduyAssist Logo">
+        
+      </div>
+      <h1 class="site-title">SK MaduyAssist</h1>
+      <!-- Navigation Links -->
+      <ul class="nav-links">
+        <li><a href="userhome.html">Home</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="#">Logout</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Community Feed Section -->
+  <section class="community-feed">
+    <div class="container">
+      <h2>Community Feed</h2>
+      <p class="intro">Stay connected—view the latest SK events, outreach, and programs. Like posts and join the conversation by commenting below!</p>
+      
+      <!-- Post Card Example -->
+      <div class="post-card">
+        <h3 class="post-title">Community Clean-Up Drive</h3>
+        <p class="post-date">Posted on: April 20, 2025</p>
+        <p class="post-description">
+          Join our clean-up drive to help improve our neighborhood! Volunteers are needed for street cleaning and recycling initiatives.
+        </p>
+        <div class="post-actions">
+          <button class="btn-like" onclick="toggleLike(this)">Like <span class="like-count">0</span></button>
+          <button class="btn-comment" onclick="toggleCommentForm(this)">Comment</button>
+        </div>
+        <!-- Comments Section (Initially hidden) -->
+        <div class="comments-section" style="display:none;">
+          <ul class="comments-list">
+            <!-- Comments will be appended here -->
+          </ul>
+          <div class="comment-form">
+            <input type="text" placeholder="Write a comment..." class="comment-input">
+            <button onclick="submitComment(this)">Submit</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Repeat Post Card for additional posts -->
+      <div class="post-card">
+        <h3 class="post-title">Youth Leadership Summit</h3>
+        <p class="post-date">Posted on: May 10, 2025</p>
+        <p class="post-description">
+          Our annual summit brings youth together to develop leadership skills and drive community projects. Don’t miss out!
+        </p>
+        <div class="post-actions">
+          <button class="btn-like" onclick="toggleLike(this)">Like <span class="like-count">0</span></button>
+          <button class="btn-comment" onclick="toggleCommentForm(this)">Comment</button>
+        </div>
+        <div class="comments-section" style="display:none;">
+          <ul class="comments-list">
+            <!-- Existing comments can be inserted here -->
+          </ul>
+          <div class="comment-form">
+            <input type="text" placeholder="Write a comment..." class="comment-input">
+            <button onclick="submitComment(this)">Submit</button>
+          </div>
+        </div>
+      </div>
+      <!-- End of post cards -->
+      
+    </div>
+  </section>
+
+  <!-- Simple JS to handle like and comment actions -->
+  <script>
+    // Toggle like button state and count
+    function toggleLike(button) {
+      let likeCountElem = button.querySelector('.like-count');
+      let count = parseInt(likeCountElem.textContent);
+      
+      // Toggle liked state
+      if (button.classList.contains('liked')) {
+        button.classList.remove('liked');
+        likeCountElem.textContent = count - 1;
+      } else {
+        button.classList.add('liked');
+        likeCountElem.textContent = count + 1;
+      }
+    }
+    
+    // Show/hide comment form
+    function toggleCommentForm(button) {
+      let postCard = button.closest('.post-card');
+      let commentSection = postCard.querySelector('.comments-section');
+      if (commentSection.style.display === 'none' || commentSection.style.display === '') {
+        commentSection.style.display = 'block';
+      } else {
+        commentSection.style.display = 'none';
+      }
+    }
+    
+    // Submit a comment and append to list
+    function submitComment(button) {
+      let commentInput = button.previousElementSibling;
+      let commentText = commentInput.value.trim();
+      if (commentText === "") return;
+      
+      let commentList = button.closest('.comments-section').querySelector('.comments-list');
+      let newComment = document.createElement('li');
+      newComment.textContent = commentText;
+      commentList.appendChild(newComment);
+      commentInput.value = "";
+    }
+  </script>
+</body>
+</html>
