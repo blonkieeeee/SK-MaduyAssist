@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Account Dashboard - SK MaduyAssist</title>
+  <!-- Premium Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans&display=swap" rel="stylesheet">
+  <!-- External CSS -->
+  <link rel="stylesheet" href="profilestyles.css">
+</head>
+<script>
+  document.addEventListener("DOMContentLoaded", async function () {
+    const loggedInUserEmail = localStorage.getItem("userEmail"); // Get email from localStorage
+
+    if (!loggedInUserEmail) {
+        alert("No user logged in!");
+        window.location.href = "login.html"; // Redirect to login if no email is found
+        return;
+    }
+
+    try {
+        // Fetch user profile data
+        const response = await fetch(`http://localhost:5000/profile/${loggedInUserEmail}`);
+        const data = await response.json();
+
+        if (response.ok) {
+            // Populate fields with user data
+            document.querySelector(".overview-details h2").textContent = data.FullName;
+            document.getElementById("email").value = data.Email;
+            document.getElementById("address").value = data.Address;
+            document.getElementById("phone").value = data.Phone;
+
+            document.querySelector(".quick-stats li:nth-child(1)").innerHTML = `<strong>Email:</strong> ${data.Email}`;
+            document.querySelector(".quick-stats li:nth-child(2)").innerHTML = `<strong>Address:</strong> ${data.Address}`;
+            document.querySelector(".quick-stats li:nth-child(3)").innerHTML = `<strong>Phone:</strong> ${data.Phone}`;
+        } else {
+            alert("User not found.");
+        }
+    } catch (error) {
+        console.error("Error fetching profile data:", error);
+        alert("Failed to load profile.");
+    }
+
+    // Handle profile update form submission
+    document.querySelector("form").addEventListener("submit", async function (e) {
+        e.preventDefault(); // Prevent default form submission
+
+        const updatedData = {
+            email: document.getElementById("email").value,
+            address: document.getElementById("address").value,
+            phone: document.getElementById("phone").value,
+            currentPassword: document.getElementById("current-password").value,
+            newPassword: document.getElementById("new-password").value,
+            confirmPassword: document.getElementById("confirm-password").value,
+        };
+
+        try {
+            const updateResponse = await fetch("http://localhost:5000/update-profile", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(updatedData),
+            });
+
+            const updateResult = await updateResponse.json();
+
+            if (updateResponse.ok) {
+                alert("Profile updated successfully!");
+            } else {
+                alert(updateResult.error || "Failed to update profile.");
+            }
+        } catch (error) {
+            console.error("Error updating profile:", error);
+            alert("Failed to update profile.");
+        }
+    });
+});
+</script>
+
+
+
+<body>
+  <!-- Header / Navbar -->
+  <header class="navbar">
+    <div class="container">
+        <div class="brand">
+            <a href="userhome.html"><img src=/pictures/uuu.png alt="SK MaduyAssist Logo"  width="100px" length="100px">
+        </div>
+        <h1 class="site-title">SK MaduyAssist</h1>
+      <nav>
+        <ul class="nav-links">
+            <li><a href="userhome.html">Home</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            
+            <li><a href="#">Logout</a></li>
+          
+        </ul>
+      </nav>
+    </div>
+  </header>
+  
+  <!-- Profile Overview Section -->
+  <section class="profile-overview">
+    <div class="overview-card">
+      <img class="overview-picture" src="/pictures/default-profile.png" alt="Profile Picture">
+      <div class="overview-details">
+        <h2>Alex Santos</h2>
+        <p class="role">Member</p>
+        <ul class="quick-stats">
+          <li><strong>Email:</strong> alex.santos@example.com</li>
+          <li><strong>Address:</strong> 123 Community Lane</li>
+          <li><strong>Phone:</strong> +1 234 567 890</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Account Settings Section -->
+  <section class="account-settings">
+    <div class="settings-container">
+      <h2>Account Settings</h2>
+      <form id="profile-form" action="/update-account" method="POST" enctype="multipart/form-data">
+        <!-- Personal Information Section -->
+        <fieldset>
+          <legend>Personal Information</legend>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="address">Residential Address</label>
+            <input type="text" id="address" name="address" placeholder="123 Main Street" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="+1 234 567 890">
+          </div>
+          <div class="form-group file-input">
+            <label for="profile-picture">Profile Picture</label>
+            <input type="file" id="profile-picture" name="profile-picture" accept="image/*">
+          </div>
+        </fieldset>
+
+        <!-- Account Security Section -->
+        <fieldset>
+          <legend>Account Security</legend>
+          <div class="form-group">
+            <label for="current-password">Current Password</label>
+            <input type="password" id="current-password" name="current-password" required>
+          </div>
+          <div class="form-group">
+            <label for="new-password">New Password</label>
+            <input type="password" id="new-password" name="new-password" required>
+          </div>
+          <div class="form-group">
+            <label for="confirm-password">Confirm New Password</label>
+            <input type="password" id="confirm-password" name="confirm-password" required>
+          </div>
+        </fieldset>
+
+        <!-- Notification Preferences Section -->
+    
+
+        <!-- Additional Options -->
+        <fieldset>
+          <legend>Additional Options</legend>
+          <div class="form-group">
+            <button type="button" class="delete-account">Delete Account</button>
+          </div>
+        </fieldset>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-update">Update Settings</button>
+          <button type="reset" class="btn-cancel">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - SK MaduyAssist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="loginstyles.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <img src="/pictures/uuu.png" alt="SK MaduyAssist Logo" width="100px" length="100px">
+            <h2>Login to SK MaduyAssist</h2>
+            <form onsubmit="loginUser(event)">
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn primary">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Pop-up Alert Modal -->
+    <div id="alertModal" class="modal">
+        <div class="modal-content">
+            <img src="/pictures/wrongpassword.jfif.png" width="100px" height="100px">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <p id="alertMessage"></p>
+            <p>invalid email/password</p>
+        </div>
+    </div>
+
+    <script>
+        async function loginUser(event) {
+            event.preventDefault(); // Prevent normal form submission
+
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            try {
+                const response = await fetch("http://localhost:5000/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem("userEmail", email);
+                    window.location.href = "userhome.html";
+                } else {
+                    showModal("Invalid email or password");
+                }
+            } catch (error) {
+                console.error("Login error:", error);
+                showModal("Login failed. Please try again.");
+            }
+        }
+
+        function showModal(message) {
+            document.getElementById("alertMessage").innerText = message;
+            document.getElementById("alertModal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("alertModal").style.display = "none";
+        }
+    </script>
+</body>
+</html>
