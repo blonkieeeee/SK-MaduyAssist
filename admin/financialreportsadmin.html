@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Financial Reports - SK MaduyAssist</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="financialreportsadminstyles.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="container">
+      <div class="brand">
+        <img src="/pictures/uuu.png" alt="SK MaduyAssist Logo">
+      </div>
+      <div class="site-title">SK MaduyAssist</div>
+      <nav>
+        <ul class="nav-links">
+            <li><a href="/admin/adminhome.html">Home</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="#">Logout</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  
+  <section class="admin-financial-reports">
+    <div class="container">
+      <h2>Admin Financial Reports</h2>
+      <p>As an admin, you can upload financial reports for transparency and accountability. Below are the reports that have been uploaded:</p>
+      
+      <div class="upload-form">
+        <h3>Upload New Financial Report</h3>
+        <form action="http://localhost:5000/upload-report" method="POST" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="report-title">Report Title:</label>
+            <input type="text" id="report-title" name="title" required placeholder="Enter report title">
+          </div>
+          <div class="form-group">
+            <label for="report-description">Description:</label>
+            <textarea id="report-description" name="description" rows="4" required placeholder="Enter report description"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="report-quarter">Quarter:</label>
+            <select id="report-quarter" name="quarter" required>
+              <option value="Q1">Q1</option>
+              <option value="Q2">Q2</option>
+              <option value="Q3">Q3</option>
+              <option value="Q4">Q4</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="report-file">Upload Report:</label>
+            <input type="file" id="report-file" name="file" accept=".pdf" required>
+          </div>
+          <button type="submit" class="upload-btn">Upload Report</button>
+        </form>
+      </div>
+
+      <!-- Uploaded Reports List -->
+      <div class="reports-list" id="reportsContainer">
+        <!-- Static Report Card 1 -->
+       
+
+        <!-- Static Report Card 2 -->
+       
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Call the backend API to get the reports
+    fetch('http://localhost:5000/get-reports')
+      .then(response => {
+        if (!response.ok) throw new Error("Failed to fetch reports");
+        return response.json();
+      })
+      .then(data => {
+        const container = document.getElementById('reportsContainer');
+
+        data.forEach(report => {
+          const card = document.createElement('div');
+          card.className = "report-card";
+
+          card.innerHTML = `
+            <h3>${report.Title}</h3>
+            <span class="quarter-label">Quarter: ${report.Quarter}</span>
+            <p class="upload-date">Uploaded on: ${new Date(report.UploadDate).toLocaleDateString()}</p>
+            <p class="description">${report.Description}</p>
+            <a href="/${report.FilePath}" target="_blank" class="download-btn">Download Report</a>
+            
+          `;
+
+          container.appendChild(card);
+        });
+
+        attachReviewListeners(); // Attach after all dynamic cards are added
+      })
+      .catch(error => {
+        console.error("Error loading reports:", error);
+        alert("Error loading reports.");
+      });
+
+    function attachReviewListeners() {
+      document.querySelectorAll(".review-btn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          const card = e.target.closest(".report-card");
+          if (card) {
+            card.remove(); // Just removes the card from the DOM
+            console.log("Marked as reviewed");
+          }
+        });
+      });
+    }
+
+    // Attach for static cards immediately after page load
+    attachReviewListeners();
+  </script>
+</body>
+</html>

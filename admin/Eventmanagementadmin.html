@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Events - SK MaduyAssist</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="eventmanagementadminstyles.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="container">
+      <div class="brand">
+        <img src="/pictures/uuu.png" alt="SK MaduyAssist Logo">
+      </div>
+      <h1 class="site-title">SK MaduyAssist</h1>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="adminhome.html">Home</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="profile.html">Profile</a></li>
+          <li><a href="#">Logout</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Events Section -->
+  <section class="events-section">
+    <div class="container">
+
+      <!-- ADMIN EVENT FORM -->
+      <div class="admin-event-form">
+        <h2>Post a New Event</h2>
+        <form action="http://localhost:5000/post-event" method="POST" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="event-title">Title:</label>
+            <input type="text" id="event-title" name="title" required placeholder="Enter event title">
+          </div>
+          <div class="form-group">
+            <label for="event-date">Date:</label>
+            <input type="date" id="event-date" name="date" required>
+          </div>
+          <div class="form-group">
+            <label for="event-location">Location:</label>
+            <input type="text" id="event-location" name="location" required placeholder="Enter location">
+          </div>
+          <div class="form-group">
+            <label for="event-category">Category:</label>
+            <select id="event-category" name="category" required>
+              <option value="community">Community</option>
+              <option value="education">Education</option>
+              <option value="volunteer">Volunteer</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="event-description">Description:</label>
+            <textarea id="event-description" name="description" rows="4" required placeholder="Enter event details"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="event-image">Event Image:</label>
+            <input type="file" id="event-image" name="image" accept="image/*" required>
+          </div>
+          <button type="submit" class="btn-post">Post Event</button>
+        </form>
+      </div>
+
+      <!-- Existing Events -->
+      <h2>Upcoming Events</h2>
+      <p class="intro">Stay updated with the latest SK events and community programs!</p>
+
+      <!-- Filter Form -->
+      <div class="event-filters">
+        <form id="filter-form">
+          <div class="filter-group">
+            <label for="filter-date">Filter by Date:</label>
+            <input type="date" id="filter-date" name="filter-date">
+          </div>
+          <div class="filter-group">
+            <label for="filter-category">Category:</label>
+            <select id="filter-category" name="filter-category">
+              <option value="all">All</option>
+              <option value="community">Community</option>
+              <option value="education">Education</option>
+              <option value="volunteer">Volunteer</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-filter">Apply Filter</button>
+        </form>
+      </div>
+
+      <!-- Event Cards -->
+      <div class="event-list">
+        <!-- Events will be loaded here -->
+      </div>
+
+    </div>
+  </section>
+</body>
+
+<script>
+  function removeEventFromUI(button) {
+  const card = button.closest('.event-card');
+  card.remove();
+}
+
+  async function fetchEvents() {
+    try {
+      const res = await fetch('http://localhost:5000/get-events');
+      const events = await res.json();
+      const eventList = document.querySelector('.event-list');
+      eventList.innerHTML = ""; // Clear current list
+
+      events.forEach(event => {
+        const card = document.createElement("div");
+        card.className = "event-card";
+        card.innerHTML = `
+          <h3>${event.Title}</h3>
+          <img src="http://localhost:5000${event.ImagePath}" alt="Event image" class="event-image"  style="max-height: 500px; max-width: 500px;">
+          <p class="date">Date: ${new Date(event.Date).toLocaleDateString()}</p>
+          <p class="location">Location: ${event.Location}</p>
+          <p class="description">${event.Description}</p>
+          <button onclick="viewParticipants(${event.Id})" class="btn-view-participants">View Participants</button>
+          <div id="participants-${event.Id}" class="participants-list" style="display:none; margin-top: 10px;"></div>
+        `;
+        card.innerHTML = `
+  <h3>${event.Title}</h3>
+  <img src="http://localhost:5000${event.ImagePath}" alt="Event image" class="event-image">
+  <p class="date">Date: ${new Date(event.Date).toLocaleDateString()}</p>
+  <p class="location">Location: ${event.Location}</p>
+  <p class="description">${event.Description}</p>
+  <button onclick="viewParticipants(${event.Id})" class="btn-view-participants">View Participants</button>
+  <button onclick="removeEventFromUI(this)" class="btn-remove">Finished Event</button>
+  <div id="participants-${event.Id}" class="participants-list" style="display:none; margin-top: 10px;"></div>
+`;
+
+        eventList.appendChild(card);
+      });
+
+    } catch (err) {
+      console.error("Error loading events:", err);
+    }
+  }
+
+  async function viewParticipants(eventId) {
+  const container = document.getElementById(`participants-${eventId}`);
+
+  // Toggle visibility
+  if (container.style.display === 'block') {
+    container.style.display = 'none';
+    return;
+  }
+
+  try {
+    const res = await fetch(`http://localhost:5000/event-participants/${eventId}`);
+    const participants = await res.json();
+
+    // Ensure participants is an array before using .map
+    if (Array.isArray(participants) && participants.length > 0) {
+      container.innerHTML = `
+        <strong>Participants:</strong>
+        <ul>
+          ${participants.map(p => `<li>${p.Name} (${p.Email})</li>`).join("")}
+        </ul>
+      `;
+    } else {
+      container.innerHTML = "<p><em>No participants yet.</em></p>";
+    }
+
+    container.style.display = 'block';
+
+  } catch (err) {
+    console.error("Error fetching participants:", err);
+    container.innerHTML = "<p style='color:red;'>Error loading participants.</p>";
+    container.style.display = 'block';
+  }
+}
+
+  window.addEventListener("DOMContentLoaded", fetchEvents);
+</script>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scholarship Applicants - Admin View</title>
+  <link rel="stylesheet" href="scholarshipapplicantsstyles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="container">
+      <div class="brand">
+        <img src="/pictures/uuu.png" alt="SK MaduyAssist Logo">
+        <div class="brand-text">
+          <span class="brand-line1">SK</span>
+          <span class="brand-line2">MaduyAssist</span>
+        </div>
+      </div>
+      <ul class="nav-links">
+        <li><a href="adminhome.html">Home</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="#">Logout</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Admin Section -->
+  <section class="admin-section">
+    <div class="container">
+      <h2>Scholarship Applicants</h2>
+      <p class="intro">Below is the list of scholarship applications submitted by users.</p>
+      <table id="applicantsTable">
+        <thead>
+          <tr>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Date of Birth</th>
+            <th>Phone Number</th>
+            <th>Address</th>
+            <th>Program</th>
+            <th>Scholarship Type</th>
+            <th>Motivation</th>
+            <th>Documents</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Rows will be dynamically inserted here -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <!-- Custom Confirmation Dialog -->
+<div id="confirmDialog" class="dialog-overlay" style="display: none;">
+  <div class="dialog-box">
+    <p id="confirmMessage">Are you sure you want to mark this applicant as reviewed?</p>
+    <div class="dialog-actions">
+      <button id="confirmYes">Yes</button>
+      <button id="confirmNo">Cancel</button>
+    </div>
+  </div>
+</div>
+
+</body>
+<script>
+  let rowToRemove = null;
+  
+  fetch("http://localhost:5000/admin/scholarship-applications")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to fetch applications");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      const tableBody = document.querySelector("tbody");
+  
+      data.forEach((applicant) => {
+        const row = document.createElement("tr");
+  
+        row.innerHTML = `
+          <td>${applicant.FullName}</td>
+          <td>${applicant.Email}</td>
+          <td>${applicant.DOB}</td>
+          <td>${applicant.PhoneNumber}</td>
+          <td>${applicant.Address}</td>
+          <td>${applicant.Program}</td>
+          <td>${applicant.ScholarshipType}</td>
+          <td>${applicant.Motivation}</td>
+          <td><a href="/${applicant.Documents}" class="downloadbtn" target="_blank">View</a></td>
+          <td><button class="review-btn">Mark as Reviewed</button></td>
+        `;
+  
+        row.querySelector(".review-btn").addEventListener("click", () => {
+          rowToRemove = row;
+          document.getElementById("confirmDialog").style.display = "flex";
+        });
+  
+        tableBody.appendChild(row);
+      });
+    })
+    .catch((error) => {
+      console.error("Error fetching applications:", error);
+      alert("Error fetching scholarship applications.");
+    });
+  
+  // Confirm Dialog Buttons
+  document.getElementById("confirmYes").addEventListener("click", () => {
+    if (rowToRemove) {
+      rowToRemove.remove();
+      rowToRemove = null;
+    }
+    document.getElementById("confirmDialog").style.display = "none";
+  });
+  
+  document.getElementById("confirmNo").addEventListener("click", () => {
+    rowToRemove = null;
+    document.getElementById("confirmDialog").style.display = "none";
+  });
+  </script>
+  
+
+</body>
+</html>

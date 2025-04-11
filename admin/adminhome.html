@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Feed - SK MaduyAssist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="adminhomestyles.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="navbar">
+        <div class="brand">
+            <img src="/pictures/uuu.png" alt="SK MaduyAssist Logo"  width="100px" length="100px">
+        </div>
+        <h1 class="site-title">SK <br>MaduyAssist</h1>
+        <div class="container">
+            
+       
+            <nav>
+                <ul class="nav-links">
+                    
+                    <li><a href="adminhome.html">Home</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="profile.html">Profile</a></li>
+                    <li><a href="#">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>Services</h2>
+            <ul>
+                <li><a href="financialreportsadmin.html">📊 Financial Reports</a></li>
+                <li><a href="Eventmanagementadmin.html">🎉 Event Management</a></li>
+                <li><a href="scholarshipapplicants.html">🎓 Scholarship Programs</a></li>
+                <li><a href="communitypostingadmin.html">📝 Community Posting</a></li>
+            </ul>
+        </aside>
+
+        <!-- SK Admin Dashboard -->
+<section class="admin-dashboard">
+    <h2> SK Admin Dashboard</h2>
+    <div class="dashboard-cards">
+        <div class="card">
+            <h3>Total Users</h3>
+            <p>150</p>
+        </div>
+        <div class="card">
+            <h3>Posts Made</h3>
+            <p>20</p>
+        </div>
+        <div class="card">
+            <h3>Scholarship Applicants</h3>
+            <p>45</p>
+        </div>
+        <div class="card">
+            <h3>Upcoming Events</h3>
+            <p>3</p>
+        </div>
+    </div>
+</section>
+
+        
+    </div>
+</body>
+
+<script>
+    async function loadDashboardData() {
+  try {
+    const response = await fetch('http://localhost:5000/admin-dashboard-stats');
+    const data = await response.json();
+
+    document.querySelector('.card:nth-child(1) p').textContent = data.users;
+    document.querySelector('.card:nth-child(2) p').textContent = data.posts;
+    document.querySelector('.card:nth-child(3) p').textContent = data.scholars;
+    document.querySelector('.card:nth-child(4) p').textContent = data.events;
+  } catch (error) {
+    console.error('Failed to load dashboard:', error);
+  }
+}
+
+window.onload = loadDashboardData;
+
+  </script>
+  
+</html>

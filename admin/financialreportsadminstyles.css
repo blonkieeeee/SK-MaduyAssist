@@ -1,0 +1,260 @@
+/* Global Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7fc;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Navbar */
+.navbar {
+    background: linear-gradient(90deg, #000000, #ff8052);
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    height: 75px;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.brand img {
+    height: 60px;
+    width: 60px;
+    margin-left: 20px;
+    transition: transform 0.3s;
+}
+
+.brand img:hover {
+    transform: scale(1.05);
+}
+
+.site-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 28px;
+    font-weight: bold;
+    color: #fff;
+    margin-left: 20px;
+}
+
+/* Nav Links */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    margin-left: 100px;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #f7f7f7;
+    font-weight: 600;
+    transition: color 0.3s;
+    font-size: 18px;
+}
+
+.nav-links li a:hover {
+    color: #000000;
+}
+
+/* Admin Financial Reports Module Styles */
+.admin-financial-reports {
+    background-color: #fff;
+    padding: 40px 20px;
+    margin: 40px auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+}
+
+.admin-financial-reports h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 32px;
+    color: #ff8052;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.admin-financial-reports p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Upload Form */
+/* Form Container */
+.upload-form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+  }
+  
+  .upload-form h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 28px;
+    color: #ff8052;
+    margin-bottom: 20px;
+  }
+  
+  /* Form Group */
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    font-size: 16px;
+    color: #333;
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  /* Input Fields Styling */
+  .upload-form input, .upload-form select, .upload-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+    background-color: #fff;
+  }
+  
+  .upload-form input:focus, .upload-form select:focus, .upload-form textarea:focus {
+    border-color: #ff8052; /* Highlight color */
+    outline: none;
+  }
+  
+  .upload-form textarea {
+    resize: vertical;
+  }
+  
+  /* Dropdown Menu Styling */
+  .upload-form select {
+    -webkit-appearance: none; /* Removes default dropdown arrow in webkit browsers */
+    -moz-appearance: none;    /* Removes default dropdown arrow in Firefox */
+    appearance: none;         /* Removes default dropdown arrow in modern browsers */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><polygon points="0,0 20,0 10,15"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    padding-right: 35px; /* Extra space for the dropdown arrow */
+  }
+  
+  /* File Input Styling */
+  .upload-form input[type="file"] {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    cursor: pointer;
+  }
+  
+  .upload-form input[type="file"]:focus {
+    border-color: #ff8052;
+  }
+  
+  /* Submit Button Styling */
+  .upload-btn {
+    background-color: #ff8052;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+  }
+  
+  .upload-btn:hover {
+    background-color: #e66a3c;
+  }
+  
+
+/* Report Cards Styling */
+.reports-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.report-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    transition: box-shadow 0.3s;
+}
+
+.report-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.report-card h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.report-card .quarter-label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #ff8052;
+    margin-bottom: 10px;
+}
+
+.report-card .upload-date {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+.report-card .description {
+    font-size: 16px;
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.download-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff8052;
+    color: #fff;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.download-btn:hover {
+    background-color: #e66a3c;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        gap: 15px;
+        margin-left: 0;
+    }
+
+    .admin-financial-reports {
+        padding: 20px;
+    }
+}

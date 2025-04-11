@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Community Feed - Admin - SK MaduyAssist</title>
+  <!-- Google Fonts: Poppins & Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <!-- External CSS -->
+  <link rel="stylesheet" href="communitypostingadminstyles.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="container">
+      <div class="brand">
+        <img src="/pictures/uuu.png" alt="SK MaduyAssist Logo">
+      </div>
+      <h1 class="site-title">SK MaduyAssist</h1>
+      <ul class="nav-links">
+        <li><a href="adminhome.html">Home</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="#">Logout</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Community Feed Section -->
+  <section class="community-feed">
+    <div class="container">
+      <h2>Community Feed</h2>
+      <p class="intro">Admins can post updates, announcements, and community news below.</p>
+
+      <!-- Post Form (Admin Only) -->
+      <div class="post-form">
+        <h3>Create a New Post</h3>
+        <input type="text" id="post-title" placeholder="Post Title">
+        <textarea id="post-description" rows="4" placeholder="Write your post..."></textarea>
+        
+        <!-- Image Upload -->
+        <label for="post-image" class="image-upload-label">
+          <span>Upload Image</span>
+        </label>
+        <input type="file" id="post-image" class="image-upload" accept="image/*">
+        
+        <button onclick="submitAdminPost()">Post Update</button>
+      </div>
+
+      <!-- Posts Container -->
+      <div id="post-list">
+        <!-- Example Post Card -->
+        <div class="post-card">
+          <h3 class="post-title">Barangay General Assembly</h3>
+          <p class="post-date">Posted on: April 6, 2025</p>
+          <p class="post-description">
+            We're inviting everyone to the Barangay Assembly this weekend. Come and join the discussion!
+          </p>
+          <div class="post-actions">
+            <button class="btn-like" onclick="toggleLike(this)">Like <span class="like-count">0</span></button>
+            <button class="btn-comment" onclick="toggleCommentForm(this)">Comment</button>
+          </div>
+          <div class="comments-section" style="display:none;">
+            <ul class="comments-list"></ul>
+            <div class="comment-form">
+              <input type="text" placeholder="Write a comment..." class="comment-input">
+              <button onclick="submitComment(this)">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  
+</body>
+<script>
+  async function submitAdminPost() {
+    const title = document.getElementById('post-title').value;
+    const description = document.getElementById('post-description').value;
+    const imageInput = document.getElementById('post-image');
+    const imageFile = imageInput.files[0];
+  
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('description', description);
+    if (imageFile) {
+      formData.append('image', imageFile);
+    }
+  
+    try {
+      const res = await fetch('http://localhost:5000/admin-post', {
+        method: 'POST',
+        body: formData
+      });
+  
+      if (res.ok) {
+        alert('Post submitted!');
+        document.getElementById('post-title').value = '';
+        document.getElementById('post-description').value = '';
+        imageInput.value = '';
+        fetchPosts(); // Reload posts
+      } else {
+        alert('Failed to post.');
+      }
+    } catch (err) {
+      console.error('Error posting:', err);
+    }
+  }
+  
+  async function fetchPosts() {
+    try {
+      const res = await fetch('http://localhost:5000/posts');
+      const posts = await res.json();
+      const postList = document.getElementById('post-list');
+      postList.innerHTML = "";
+  
+      posts.forEach(post => {
+        const card = document.createElement("div");
+        card.className = "post-card";
+        card.innerHTML = `
+          <h3 class="post-title">${post.Title}</h3>
+          <p class="post-date">Posted on: ${new Date(post.CreatedAt).toLocaleDateString()}</p>
+          <p class="post-description">${post.Description}</p>
+          ${post.ImagePath ? `<img src="http://localhost:5000${post.ImagePath}" class="post-image" width="500px">` : ""}
+          <div class="post-actions">
+            <button class="btn-like" onclick="likePost(${post.Id}, this)">Like <span class="like-count">${post.Likes}</span></button>
+            <button class="btn-comment" onclick="toggleCommentForm(this)">Comment</button>
+          </div>
+          <div class="comments-section" style="display:none;">
+            <ul class="comments-list">
+              ${post.Comments.map(c => `<li>${c}</li>`).join("")}
+            </ul>
+            <div class="comment-form">
+              <input type="text" placeholder="Write a comment..." class="comment-input">
+              <button onclick="submitComment(this, ${post.Id})">Submit</button>
+            </div>
+          </div>
+        `;
+        postList.appendChild(card);
+      });
+    } catch (err) {
+      console.error('Failed to load posts:', err);
+    }
+  }
+  
+  async function likePost(postId, btn) {
+    const res = await fetch(`http://localhost:5000/like-post/${postId}`, {
+      method: 'POST'
+    });
+  
+    if (res.ok) {
+      const countSpan = btn.querySelector(".like-count");
+      countSpan.textContent = parseInt(countSpan.textContent) + 1;
+    }
+  }
+  
+  function toggleCommentForm(btn) {
+    const section = btn.closest('.post-card').querySelector('.comments-section');
+    section.style.display = section.style.display === 'block' ? 'none' : 'block';
+  }
+  
+  async function submitComment(btn, postId) {
+    const input = btn.previousElementSibling;
+    const comment = input.value;
+    if (!comment) return;
+  
+    const res = await fetch(`http://localhost:5000/comment-post/${postId}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ comment })
+    });
+  
+    if (res.ok) {
+      const list = btn.closest('.comment-form').previousElementSibling;
+      list.innerHTML += `<li>${comment}</li>`;
+      input.value = "";
+    }
+  }
+  
+  window.addEventListener('DOMContentLoaded', fetchPosts);
+  </script>
+  
+</html>
